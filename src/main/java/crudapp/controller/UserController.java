@@ -1,7 +1,7 @@
 package crudapp.controller;
 
-import crudapp.service.UserService;
 import crudapp.model.User;
+import crudapp.service.UserService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -11,7 +11,7 @@ import java.util.List;
 @Controller
 @RequestMapping(value = "/")
 public class UserController {
-    private UserService service;
+    private final UserService service;
 
     public UserController(UserService service) {
         this.service = service;
@@ -26,19 +26,19 @@ public class UserController {
     }
 
     @GetMapping("adduser")
-    public String addUserForm(Model model){
+    public String addUserForm(Model model) {
         model.addAttribute("user", new User());
         return "adduser";
     }
 
     @PostMapping("adduser")
-    public String addUser(@ModelAttribute("user") User user){
+    public String addUser(@ModelAttribute("user") User user) {
         service.addUser(user);
         return "redirect:/";
     }
 
-    @GetMapping("delete/{id}")
-    public String delete(@PathVariable("id")int userId){
+    @DeleteMapping("delete/{id}")
+    public String delete(@PathVariable("id") int userId) {
         service.deleteUserById(userId);
 
         return "redirect:/";
@@ -51,10 +51,9 @@ public class UserController {
         return "update";
     }
 
-    @PostMapping("update/{id}")
+    @PatchMapping("update/{id}")
     public String updateUser(User user, @PathVariable("id") int id) {
-        service.updateUser(id, user);
+        service.updateUser(user);
         return "redirect:/";
     }
-
 }

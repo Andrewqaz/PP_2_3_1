@@ -1,41 +1,19 @@
 package crudapp.service;
 
-import crudapp.dao.UserDao;
 import crudapp.model.User;
-import org.springframework.stereotype.Component;
-import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
-@Component
-public class UserService {
-    private UserDao dao;
+public interface UserService {
 
-    public UserService(UserDao dao) {
-        this.dao = dao;
-    }
+    void addUser(User user);
 
-    @Transactional
-    public void addUser(User user){
-        dao.addUser(user);
-    }
+    List<User> getAllUsers();
 
-    public List<User> getAllUsers(){
-        return dao.getAllUsers();
-    }
+    void deleteUserById(int id);
 
-    @Transactional
-    public void deleteUserById(int id){
-        dao.deleteUserById(id);
-    }
+    User getUserById(int id);
 
-    public User getUserById(int id){
-        return dao.getUserById(id);
-    }
-
-    @Transactional
-    public void updateUser(int id, User user){
-        dao.updateUser(id, user);
-    }
+    void updateUser(User user);
 
 }
